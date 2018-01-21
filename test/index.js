@@ -148,9 +148,9 @@ describe('node-precinct', function() {
 
   describe('paperwork', function() {
     it('returns the dependencies for the given filepath', function() {
-      assert.ok(precinct.paperwork(__dirname + '/es6.js').length);
-      assert.ok(precinct.paperwork(__dirname + '/styles.scss').length);
-      assert.ok(precinct.paperwork(__dirname + '/typescript.ts').length);
+      assert.ok(precinct.paperwork(path.join(__dirname, 'es6.js')).length);
+      assert.ok(precinct.paperwork(path.join(__dirname, '/styles.scss')).length);
+      assert.ok(precinct.paperwork(path.join(__dirname, '/typescript.ts')).length);
     });
 
     it('throws if the file cannot be found', function() {
@@ -160,7 +160,7 @@ describe('node-precinct', function() {
     });
 
     it('filters out core modules if options.includeCore is false', function() {
-      var deps = precinct.paperwork(__dirname + '/coreModules.js', {
+      var deps = precinct.paperwork(path.join(__dirname , 'coreModules.js'), {
         includeCore: false
       });
 
@@ -168,7 +168,7 @@ describe('node-precinct', function() {
     });
 
     it('does not filter out core modules by default', function() {
-      var deps = precinct.paperwork(__dirname + '/coreModules.js');
+      var deps = precinct.paperwork(path.join(__dirname , 'coreModules.js'));
       assert(deps.length);
     });
 
@@ -181,9 +181,9 @@ describe('node-precinct', function() {
         }
       };
 
-      var deps = precinct.paperwork(__dirname + '/amd.js', {
-        includeCore: false,
-        amd: config.amd
+      var deps = precinct.paperwork(path.join(__dirname, 'amd.js'), {
+          amd: config.amd,
+          includeCore: false
       });
 
       assert.deepEqual(stub.args[0][1], config.amd);
@@ -195,7 +195,7 @@ describe('node-precinct', function() {
         var stub = sinon.stub().returns([]);
         var revert = precinct.__set__('precinct', stub);
 
-        var deps = precinct.paperwork(__dirname + '/amd.js', {
+        var deps = precinct.paperwork(path.join(__dirname, 'amd.js'), {
           amd: {
             skipLazyLoaded: true
           }

@@ -104,7 +104,7 @@ function precinct(content, options) {
   }
 
   return dependencies;
-};
+}
 
 function detectiveEs6Cjs(ast, detectiveOptions) {
   return detectiveEs6(ast, detectiveOptions).concat(detectiveCjs(ast, detectiveOptions));
